@@ -173,4 +173,4 @@ def serializeAndWriteToFile (source : Source) (depth : Nat) : TermElabM Unit := 
 -- #eval serializeAndWriteToFile (Source.Constant `(@Nat.add_assoc)) 7
 -- #eval serializeAndWriteToFile (Source.Namespace "Nat") 2
 
-#eval serializeAndWriteToFile (Source.Namespace "Mathlib") 99
+#eval! serializeAndWriteToFile (Source.Namespace "Mathlib") 99
