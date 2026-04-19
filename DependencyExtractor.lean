@@ -33,9 +33,14 @@ def getConstType (n : Name) : TermElabM String := do
     | _ => "Other"
 
 def getConstantBody (n : Name) : TermElabM (Option Expr) := do
-  let constInfo ← getConstInfo n
-  let constValue := constInfo.value?
-  return constValue
+  let info ← getConstInfo n
+  if info.hasValue then
+    -- This ensures the value is actually loaded/instantiated
+    return some (← instantiateValue info.value!)
+  else
+    return none
+
+
 
 
 /--
