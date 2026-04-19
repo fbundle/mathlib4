@@ -33,12 +33,9 @@ def getConstType (n : Name) : TermElabM String := do
     | _ => "Other"
 
 def getConstantBody (n : Name) : TermElabM (Option Expr) := do
-  let info ← getConstInfo n
-  if info.hasValue then
-    -- This ensures the value is actually loaded/instantiated
-    return some (← instantiateValue info.value!)
-  else
-    return none
+  let constInfo ← getConstInfo n
+  let constValue := constInfo.value?
+  return constValue
 
 
 
@@ -173,4 +170,4 @@ def serializeAndWriteToFile (source : Source) (depth : Nat) : TermElabM Unit := 
 -- #eval serializeAndWriteToFile (Source.Constant `(@Nat.add_assoc)) 7
 -- #eval serializeAndWriteToFile (Source.Namespace "Nat") 2
 
-#eval! serializeAndWriteToFile (Source.Namespace "Mathlib") 99
+#eval serializeAndWriteToFile (Source.Namespace "Mathlib") 99
